@@ -1,11 +1,31 @@
 const express = require('express');
-const estudianteRoutes = require('./routes/estudianteRoute');
-const cursoRoutes = require('./routes/cursoRoutes');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+const estudianteRoutes =
+    require('./routes/estudianteRoutes');
+
+const cursoRoutes =
+    require('./routes/cursoRoutes');
+
+const usuarioRoutes =
+    require('./routes/usuarioRoutes');
 
 const app = express();
 
-app.use(express.json());
+// Configuración de CORS
+const corsOptions = {
+    origin: process.env.CLIENT_URL || '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
 
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+
+// Registro de Rutas
+app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/estudiantes', estudianteRoutes);
 app.use('/api/cursos', cursoRoutes);
 

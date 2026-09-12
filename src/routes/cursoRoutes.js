@@ -1,6 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const cursoController = require('../controllers/cursoController');
+
+const cursoController =
+    require('../controllers/cursoController');
+
+const {
+    verificarToken,
+    permitirRoles
+} = require('../middlewares/authMiddleware');
+
+router.use(
+    verificarToken,
+    permitirRoles('ADMIN', 'MANTENIMIENTO')
+);
 
 router.post('/', cursoController.crear);
 router.get('/', cursoController.obtenerTodos);
