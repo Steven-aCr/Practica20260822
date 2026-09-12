@@ -3,7 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const estudianteRoutes =
-    require('./routes/estudianteRoutes');
+    require('./routes/estudianteRoute');
 
 const cursoRoutes =
     require('./routes/cursoRoutes');
