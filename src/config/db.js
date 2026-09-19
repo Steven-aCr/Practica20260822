@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const conectarDB = async () => {
     try {
-        await mongoose.connect(process.env.Mongo_URI);
+        await mongoose.connect(process.env.MONGO_URI);
         console.log('Capa de datos: Conexion exitosa a MongoDB');
     } catch (error) {
         console.error('Error critico de conexion al DB: ', error.message);
