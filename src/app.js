@@ -14,10 +14,30 @@ const usuarioRoutes =
 const app = express();
 
 // Configuración de CORS
+const allowedOrigins = (process.env.CLIENT_URL || '')
+    .split(',')
+    .map(origin => origin.trim())
+    .filter(Boolean);
+
 const corsOptions = {
-    origin: process.env.CLIENT_URL || '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: (origin, callback) => {
+        // Permite herramientas sin Origin, como Postman
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error(`Origen no permitido por CORS: ${origin}`));
+    },
+
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'x-use-cookie'
+    ],
+
+    credentials: true
 };
 
 app.use(cors(corsOptions));
